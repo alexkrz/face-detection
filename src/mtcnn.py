@@ -353,10 +353,10 @@ class MTCNN:
             img_y = np.transpose(img_x, (0, 3, 1, 2))  # Caffe model expects NCHW
 
             self._pnet.setInput(img_y)
-            out = self._pnet.forward()
+            out = self._pnet.forward(["conv4-2", "prob1"])
 
-            out0 = np.transpose(out[0], (0, 2, 1, 3))
-            out1 = np.transpose(out[1], (0, 2, 1, 3))
+            out0 = np.transpose(out[0], (0, 2, 3, 1))
+            out1 = np.transpose(out[1], (0, 2, 3, 1))
 
             boxes, _ = self.__generate_bounding_box(
                 out1[0, :, :, 1].copy(), out0[0, :, :, :].copy(), scale, self._steps_threshold[0]
