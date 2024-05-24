@@ -28,4 +28,4 @@ List of important approaches:
 
 ### Todos
 
-[ ] How do I load a Caffe model with the OpenCV DNN library in Python?
+- [ ] How do I load a Caffe model with the OpenCV DNN library in Python?
