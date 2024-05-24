@@ -492,10 +492,10 @@ class MTCNN:
                 return np.empty(shape=(0,)), np.empty(shape=(0,))
 
         tempimg = (tempimg - 127.5) * 0.0078125
-        tempimg1 = np.transpose(tempimg, (3, 1, 0, 2))
+        tempimg1 = np.transpose(tempimg, (3, 2, 0, 1))  # Caffe model expects NCHW
 
         self._onet.setInput(tempimg1)
-        out = self._onet.forward(["dense_5", "dense_6", "softmax_2"])
+        out = self._onet.forward(["conv6-2", "conv6-3", "prob1"])
         out0 = np.transpose(out[0])
         out1 = np.transpose(out[1])
         out2 = np.transpose(out[2])
