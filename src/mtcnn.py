@@ -430,10 +430,10 @@ class MTCNN:
                 return np.empty(shape=(0,)), stage_status
 
         tempimg = (tempimg - 127.5) * 0.0078125
-        tempimg1 = np.transpose(tempimg, (3, 1, 0, 2))
+        tempimg1 = np.transpose(tempimg, (3, 2, 0, 1))  # Caffe model expects NCHW
 
         self._rnet.setInput(tempimg1)
-        out = self._rnet.forward()
+        out = self._rnet.forward(["conv5-2", "prob1"])
 
         out0 = np.transpose(out[0])
         out1 = np.transpose(out[1])
