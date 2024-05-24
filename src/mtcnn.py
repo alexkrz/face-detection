@@ -536,10 +536,10 @@ def mtcnn_detect(
 ) -> Tuple[np.ndarray, int]:
 
     img = deepcopy(img)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    img_in = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     detector = MTCNN(ckpt_root_dir)
-    results = detector.detect_faces(img)
+    results = detector.detect_faces(img_in)
 
     n_detections = len(results)
 

@@ -4,10 +4,13 @@ List of important approaches:
 
 1. [Viola-Jones Detector](https://ieeexplore.ieee.org/document/990517) (CVPR, 2001)
     - Available in OpenCV
+    - A tutorial can be found here: <https://docs.opencv.org/3.4/db/d28/tutorial_cascade_classifier.html>
 
 2. [MTCNN](https://ieeexplore.ieee.org/document/7553523) (2016)
-    - Use OpenCV DNN implementation from <https://github.com/ksachdeva/opencv-mtcnn>
-    - The Model was originally trained in Caffe
+    - Original code: <https://github.com/kpzhang93/MTCNN_face_detection_alignment>
+    - The model was originally developed in Caffe
+    - Repository with OpenCV and C++: <https://github.com/ksachdeva/opencv-mtcnn>
+    - Repository with OpenCV and Python: <https://github.com/linxiaohui/mtcnn-opencv>
 
 3. [SSD](http://arxiv.org/abs/1512.02325) (ECCV, 2016)
     - The official code repository is here: <https://github.com/weiliu89/caffe/tree/ssd>
