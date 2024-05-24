@@ -1,0 +1,2 @@
+All images are taken from the following tutorial:
+https://towardsdatascience.com/robust-face-detection-with-mtcnn-400fa81adc2e
