@@ -28,4 +28,4 @@ List of important approaches:
 
 ### Todos
 
-- [ ] Implement `src/mtcnn.py`
+- [ ] Adapt `src/mtcnn.py` to use original Caffe weights
