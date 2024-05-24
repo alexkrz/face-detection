@@ -1,5 +1,11 @@
+# System
+__pycache__/
+
 # VSCode
 /.vscode/
 
 # Checkpoints
 /checkpoints/
+
+# Data
+/data/
