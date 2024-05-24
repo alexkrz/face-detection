@@ -58,14 +58,17 @@ class MTCNN:
         self._steps_threshold = steps_threshold
         self._scale_factor = scale_factor
 
-        self._pnet = cv2.dnn.readNetFromONNX(
-            str(ckpt_root_dir / "pnet.onnx"),
+        self._pnet = cv2.dnn.readNetFromCaffe(
+            str(ckpt_root_dir / "det1.prototxt"),
+            str(ckpt_root_dir / "det1.caffemodel"),
         )
-        self._rnet = cv2.dnn.readNetFromONNX(
-            str(ckpt_root_dir / "rnet.onnx"),
+        self._rnet = cv2.dnn.readNetFromCaffe(
+            str(ckpt_root_dir / "det2.prototxt"),
+            str(ckpt_root_dir / "det2.caffemodel"),
         )
-        self._onet = cv2.dnn.readNetFromONNX(
-            str(ckpt_root_dir / "onet.onnx"),
+        self._onet = cv2.dnn.readNetFromCaffe(
+            str(ckpt_root_dir / "det3.prototxt"),
+            str(ckpt_root_dir / "det3.caffemodel"),
         )
 
     @property
@@ -347,10 +350,10 @@ class MTCNN:
             scaled_image = self.__scale_image(image, scale)
 
             img_x = np.expand_dims(scaled_image, 0)
-            img_y = np.transpose(img_x, (0, 2, 1, 3))
+            img_y = np.transpose(img_x, (0, 3, 1, 2))  # Caffe model expects NCHW
 
             self._pnet.setInput(img_y)
-            out = self._pnet.forward(["conv2d_4", "softmax"])
+            out = self._pnet.forward()
 
             out0 = np.transpose(out[0], (0, 2, 1, 3))
             out1 = np.transpose(out[1], (0, 2, 1, 3))
@@ -430,7 +433,7 @@ class MTCNN:
         tempimg1 = np.transpose(tempimg, (3, 1, 0, 2))
 
         self._rnet.setInput(tempimg1)
-        out = self._rnet.forward(["dense_2", "softmax_1"])
+        out = self._rnet.forward()
 
         out0 = np.transpose(out[0])
         out1 = np.transpose(out[1])
@@ -532,7 +535,7 @@ class MTCNN:
 
 def mtcnn_detect(
     img: np.ndarray,
-    ckpt_root_dir: str = "checkpoints/mtcnn-onnx",
+    ckpt_root_dir: str = "checkpoints/mtcnn-caffe",
 ) -> Tuple[np.ndarray, int]:
 
     img = deepcopy(img)
