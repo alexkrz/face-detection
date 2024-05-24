@@ -4,16 +4,18 @@ from jsonargparse import CLI
 
 from src.ssd import ssd_detect
 from src.viola_jones import viola_jones_detect
+from src.yolo import yolo_detect
 
 func_dict = {
     "ssd": ssd_detect,
     "viola_jones": viola_jones_detect,
+    "yolo": yolo_detect,
 }
 
 
 def main(
-    img_p: str = "data/img1.jpg",
-    method_name: str = "ssd",
+    img_p: str = "data/img2.jpg",
+    method_name: str = "yolo",
 ):
     assert method_name in func_dict.keys()
     img_in = cv2.imread(img_p)

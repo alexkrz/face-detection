@@ -3,7 +3,6 @@ from typing import Tuple
 
 import cv2
 import numpy as np
-from jsonargparse import CLI
 
 
 # Code adapted from https://github.com/sr6033/face-detection-with-OpenCV-and-DNN
