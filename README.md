@@ -32,6 +32,7 @@ List of important approaches:
 ## Set up repository
 
 1. Install miniconda
+
 2. Create conda environment with
 
     ```bash

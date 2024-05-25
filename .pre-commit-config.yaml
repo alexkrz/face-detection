@@ -120,10 +120,13 @@ repos:
   #         - mdformat-tables
   #         # - mdformat-toc
   #         # - mdformat-black
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.13.0
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.40.0
     hooks:
-      - id: markdownlint-cli2
+      - id: markdownlint
+        args:
+          - --disable=MD013 # Disable line length limitation
+          # - --disable=MD047
 
   # word spelling linter
   - repo: https://github.com/codespell-project/codespell
