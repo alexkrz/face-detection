@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from jsonargparse import CLI
 
-from src.mtcnn import mtcnn_detect
+from src.mtcnn_caffe import mtcnn_detect
 from src.ssd import ssd_detect
 from src.viola_jones import viola_jones_detect
 from src.yolo import yolo_detect
