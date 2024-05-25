@@ -8,6 +8,8 @@ from typing import Tuple
 import cv2
 import numpy as np
 
+DEBUG = False
+
 
 class StageStatus:
     """
@@ -357,6 +359,10 @@ class MTCNN:
 
             out0 = np.transpose(out[0], (0, 2, 3, 1))
             out1 = np.transpose(out[1], (0, 2, 3, 1))
+            if DEBUG:
+                print("Stage 1")
+                print("out0.shape:", out0.shape)
+                print("out1.shape:", out1.shape)
 
             boxes, _ = self.__generate_bounding_box(
                 out1[0, :, :, 1].copy(), out0[0, :, :, :].copy(), scale, self._steps_threshold[0]
@@ -430,13 +436,17 @@ class MTCNN:
                 return np.empty(shape=(0,)), stage_status
 
         tempimg = (tempimg - 127.5) * 0.0078125
-        tempimg1 = np.transpose(tempimg, (3, 2, 0, 1))  # Caffe model expects NCHW
+        tempimg1 = np.transpose(tempimg, (3, 2, 1, 0))  # Caffe model expects NCHW
 
         self._rnet.setInput(tempimg1)
         out = self._rnet.forward(["conv5-2", "prob1"])
 
         out0 = np.transpose(out[0])
         out1 = np.transpose(out[1])
+        if DEBUG:
+            print("Stage 2")
+            print("out0.shape:", out0.shape)
+            print("out1.shape:", out1.shape)
 
         score = out1[1, :]
 
@@ -492,7 +502,7 @@ class MTCNN:
                 return np.empty(shape=(0,)), np.empty(shape=(0,))
 
         tempimg = (tempimg - 127.5) * 0.0078125
-        tempimg1 = np.transpose(tempimg, (3, 2, 0, 1))  # Caffe model expects NCHW
+        tempimg1 = np.transpose(tempimg, (3, 2, 1, 0))  # Caffe model expects NCHW
 
         self._onet.setInput(tempimg1)
         out = self._onet.forward(["conv6-2", "conv6-3", "prob1"])
