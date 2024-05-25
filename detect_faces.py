@@ -21,6 +21,13 @@ def main(
     img_p: str = "data/img2.jpg",
     method_name: str = "mtcnn_onnx",
 ):
+    """Perform face detection on input image.
+
+    Args:
+        img_p (str): Path to input image.
+        method_name (str): The method to use.
+    """
+
     assert method_name in func_dict.keys()
     img_in = cv2.imread(img_p)
     cv2.imshow("Input Image", img_in)

@@ -29,6 +29,36 @@ List of important approaches:
     - The YoloV8-Face repository is here: <https://github.com/derronqi/yolov8-face/tree/main>
     - Converted ONNX models for yolov8 can be found here: <https://github.com/hpc203/yolov8-face-landmarks-opencv-dnn>
 
-### Todos
+## Set up repository
+
+1. Install miniconda
+2. Create conda environment with
+
+    ```bash
+    conda env create -n fdetect -f environment.yml
+    ```
+
+3. Install pip requirements
+
+    ```bash
+    conda activate fdetect
+    pip install -r requirements.txt
+    ```
+
+4. Install pre-commit
+
+    ```bash
+    pre-commit install
+    ```
+
+5. Perform face detection
+
+    ```bash
+    python detect_faces.py (-h)
+    ```
+
+    Use `-h` flag to show options
+
+## Todos
 
 - [ ] Fix performance discrepancy between `src/mtcnn_onnx.py` and `src/mtcnn_caffe.py`
