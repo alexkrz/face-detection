@@ -3,9 +3,3 @@ __pycache__/
 
 # VSCode
 /.vscode/
-
-# Checkpoints
-/checkpoints/
-
-# Data
-/data/

@@ -16,7 +16,7 @@ func_dict = {
 
 
 def main(
-    img_p: str = "data/img2.jpg",
+    img_p: str = "data/img3.jpg",
     method_name: str = "mtcnn",
 ):
     assert method_name in func_dict.keys()

@@ -1,0 +1,2 @@
+res10_300x300_ssd_iter_140000.caffemodel -> ssd_facedetect.caffemodel
+deploy.prototxt.txt -> ssd_facedetect.prototxt.txt
