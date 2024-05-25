@@ -543,7 +543,7 @@ class MTCNN:
         return total_boxes, points
 
 
-def mtcnn_detect(
+def mtcnn_caffe_detect(
     img: np.ndarray,
     ckpt_root_dir: str = "checkpoints/mtcnn-caffe",
 ) -> Tuple[np.ndarray, int]:

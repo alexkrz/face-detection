@@ -31,4 +31,4 @@ List of important approaches:
 
 ### Todos
 
-- [ ] Adapt `src/mtcnn.py` to use original Caffe weights
+- [ ] Fix performance discrepancy between `src/mtcnn_onnx.py` and `src/mtcnn_caffe.py`
