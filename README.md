@@ -34,30 +34,30 @@ List of important approaches:
 1. Install miniconda
 2. Create conda environment with
 
-```bash
-conda env create -n fdetect -f environment.yml
-```
+    ```bash
+    conda env create -n fdetect -f environment.yml
+    ```
 
 3. Install pip requirements
 
-```bash
-conda activate fdetect
-pip install -r requirements.txt
-```
+    ```bash
+    conda activate fdetect
+    pip install -r requirements.txt
+    ```
 
 4. Install pre-commit
 
-```bash
-pre-commit install
-```
+    ```bash
+    pre-commit install
+    ```
 
 5. Perform face detection
 
-```bash
-python detect_faces.py (-h)
-```
+    ```bash
+    python detect_faces.py (-h)
+    ```
 
-Use `-h` flag to show options
+    Use `-h` flag to show options
 
 ## Todos
 
