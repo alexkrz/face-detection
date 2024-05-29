@@ -126,7 +126,7 @@ repos:
       - id: markdownlint
         args:
           - --disable=MD013 # Line length limitation
-          - --disable=MD029 # Line numbering in ordered list
+          # - --disable=MD029 # Line numbering in ordered list
           - --disable=MD033 # No inline html
           # - --disable=MD047
 
