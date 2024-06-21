@@ -18,8 +18,8 @@ func_dict = {
 
 
 def main(
-    img_p: str = "data/img2.jpg",
-    method_name: str = "mtcnn_onnx",
+    img_p: str = "data/img3.jpg",
+    method_name: str = "yolo",
 ):
     """Perform face detection on input image.
 
