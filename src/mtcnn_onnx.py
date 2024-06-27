@@ -1,9 +1,8 @@
 # Code from https://github.com/linxiaohui/mtcnn-opencv/blob/main/mtcnn_cv2/mtcnn_opencv.py
 # with a few adaptations
 import imghdr
-from copy import deepcopy
 from pathlib import Path
-from typing import Tuple
+from typing import List, Tuple
 
 import cv2
 import numpy as np
@@ -533,32 +532,24 @@ class MTCNN:
 def mtcnn_onnx_detect(
     img: np.ndarray,
     ckpt_root_dir: str = "checkpoints/mtcnn-onnx",
-) -> Tuple[np.ndarray, int]:
+) -> Tuple[List, List]:
+    """Detect faces with MTCNN using ONNX weights
 
-    img = deepcopy(img)
-    img_in = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    Args:
+        img (np.ndarray): Input image in OpenCV BGR format.
+        ckpt_root_dir (str, optional): The checkpoint directory.
 
+    Returns:
+        Tuple[List, List]: Bounding boxes and keypoints
+    """
     detector = MTCNN(ckpt_root_dir)
+    img_in = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Color is converted only inside the function
     results = detector.detect_faces(img_in)
 
-    n_detections = len(results)
-
+    bboxes = []
+    keypoints_all = []
     for result in results:
-        keypoints = result["keypoints"]
-        bounding_box = result["box"]
+        bboxes.append(result["box"])
+        keypoints_all.append(result["keypoints"])
 
-        cv2.rectangle(
-            img,
-            (bounding_box[0], bounding_box[1]),
-            (bounding_box[0] + bounding_box[2], bounding_box[1] + bounding_box[3]),
-            (0, 155, 255),
-            2,
-        )
-
-        cv2.circle(img, (keypoints["left_eye"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["right_eye"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["nose"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["mouth_left"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["mouth_right"]), 2, (0, 155, 255), 2)
-
-    return img, n_detections
+    return bboxes, keypoints_all

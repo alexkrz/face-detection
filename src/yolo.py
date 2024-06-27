@@ -1,6 +1,5 @@
 import math
-from copy import deepcopy
-from typing import Tuple
+from typing import List, Tuple
 
 import cv2
 import numpy as np
@@ -162,15 +161,16 @@ class YOLOv8_face:
 
         indices = cv2.dnn.NMSBoxes(
             bboxes_wh.tolist(), confidences.tolist(), self.conf_threshold, self.iou_threshold
-        ).flatten()
-        if len(indices) > 0:
+        )
+        if isinstance(indices, np.ndarray) and len(indices.flatten()) > 0:
+            indices = indices.flatten()
             mlvl_bboxes = bboxes_wh[indices]
             confidences = confidences[indices]
             classIds = classIds[indices]
             landmarks = landmarks[indices]
             return mlvl_bboxes, confidences, classIds, landmarks
         else:
-            print("nothing detect")
+            # print("nothing detect")
             return np.array([]), np.array([]), np.array([]), np.array([])
 
     def distance2bbox(self, points, distance, max_shape=None):
@@ -207,16 +207,45 @@ class YOLOv8_face:
         return image
 
 
+def adjust_boxes_and_kpts(boxes: np.ndarray, kpts: np.ndarray) -> Tuple[List, List]:
+    bboxes = []
+    keypoints_all = []
+    order = ["left_eye", "right_eye", "nose", "mouth_left", "mouth_right"]
+    for i in range(len(boxes)):
+        box = boxes[i]
+        kp = kpts[i]
+        x, y, w, h = box.astype(int)
+        bbox = [x, y, w, h]
+        bboxes.append(bbox)
+
+        keypoints = {}
+        for j in range(len(order)):
+            # Question: Why does every keypoint have a third value?
+            # -> Third value could be keypoint confidence
+            keypoints[order[j]] = (int(kp[j * 3]), int(kp[j * 3 + 1]))
+        keypoints_all.append(keypoints)
+    return bboxes, keypoints_all
+
+
 def yolo_detect(
     img: np.ndarray,
     checkpoint_p: str = "checkpoints/yolo/yolov8n-face.onnx",
-) -> Tuple[np.ndarray, int]:
+) -> Tuple[List, List]:
+    """Detect faces with YOLO network
 
-    img = deepcopy(img)
+    Args:
+        img (np.ndarray): Input image in OpenCV BGR format.
+        ckpt_root_dir (str, optional): The checkpoint directory.
+
+    Returns:
+        Tuple[List, List]: Bounding boxes and keypoints
+    """
 
     YOLOv8_face_detector = YOLOv8_face(checkpoint_p, conf_thres=0.45, iou_thres=0.5)
     boxes, scores, classids, kpts = YOLOv8_face_detector.detect(img)
-    n_detections = len(boxes)
-    img_out = YOLOv8_face_detector.draw_detections(img, boxes, scores, kpts)
+    # n_detections = len(boxes)
+    # img_out = YOLOv8_face_detector.draw_detections(img, boxes, scores, kpts)
 
-    return img_out, n_detections
+    bboxes, keypoints_all = adjust_boxes_and_kpts(boxes, kpts)
+
+    return bboxes, keypoints_all
