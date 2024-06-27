@@ -51,13 +51,21 @@ List of important approaches:
     pre-commit install
     ```
 
-5. Perform face detection
+## Run scripts
+
+1. Face detection:
 
     ```bash
     python detect_faces.py (-h)
     ```
 
-    Use `-h` flag to show options
+2. Face alignment:
+
+    ```bash
+    python detect_align.py (-h)
+    ```
+
+Use `-h` flag to show options
 
 ## Todos
 
