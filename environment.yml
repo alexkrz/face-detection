@@ -1,6 +1,6 @@
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python=3.11.*
+  - ipykernel=6.29.*
   - pip>=23
