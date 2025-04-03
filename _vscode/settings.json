@@ -15,5 +15,5 @@
     "notebook.codeActionsOnSave": {
         "notebook.source.organizeImports": "explicit"
     },
-    "notebook.formatOnSave.enabled": false,
+    "notebook.formatOnSave.enabled": true,
 }
