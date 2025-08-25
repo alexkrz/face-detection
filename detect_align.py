@@ -1,11 +1,11 @@
+import os
 from copy import deepcopy
 from pathlib import Path
-from typing import List
 
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-from jsonargparse import CLI
+from jsonargparse import auto_cli
 from tqdm import tqdm
 
 from src.mtcnn_caffe import mtcnn_caffe_detect
@@ -27,7 +27,6 @@ def align_face(
     src_landmarks: np.ndarray,
     output_size: tuple = (112, 112),
 ) -> np.ndarray:
-
     # Check src_landmarks
     assert src_landmarks.shape == (5, 2)
     if src_landmarks.dtype != np.float32:
@@ -80,7 +79,7 @@ def align_face(
 
         # Plot all 3 images into one matplotlib plot
         fig, axs = plt.subplots(1, 3, figsize=(10, 4))
-        axs: List[plt.Axes]  # Tell IDE the type of axs variable
+        axs: list[plt.Axes]  # Tell IDE the type of axs variable
         axs[0].imshow(cv2.cvtColor(src_img, cv2.COLOR_BGR2RGB))
         axs[0].set_title("Source Image")
         axs[1].imshow(cv2.cvtColor(template_img, cv2.COLOR_BGR2RGB))
@@ -95,19 +94,21 @@ def align_face(
 
 
 def main(
-    data_p: Path = Path.home() / "Data" / "EURECOM_Kinect_Face_Dataset",
-    out_p: Path = Path.home() / "Data" / "EURECOM_Kinect_Face_Dataset_aligned",
-    out_ext: str = ".png",
+    data_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/selection/001",
+    out_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/aligned",
+    file_ext: str = ".png",
     method_name: str = "yolo",
     write_images: bool = True,
 ):
+    data_p = Path(data_p)  # type: Path
+    out_p = Path(out_p)  # type: Path
     assert data_p.exists()
     if not out_p.exists():
         out_p.mkdir()
-    assert out_ext in [".png", ".jpg"]
+    assert file_ext in [".png", ".jpg"]
     assert method_name in func_dict.keys()
 
-    img_paths = sorted(list(data_p.glob("*/*/RGB/*.bmp")))
+    img_paths = sorted(list(data_p.glob("*" + file_ext)))
     error_list = []
     error_count = 0
     for i in tqdm(range(len(img_paths))):
@@ -127,7 +128,7 @@ def main(
             landmarks = np.array(list(keypoints.values()), dtype=np.float32)
             aligned_img = align_face(img_in, landmarks)
             if write_images:
-                img_outp = out_p / str(img_p.parent.relative_to(data_p)) / (img_p.stem + out_ext)
+                img_outp = out_p / str(img_p.parent.relative_to(data_p)) / (img_p.stem + file_ext)
                 if not img_outp.parent.exists():
                     img_outp.parent.mkdir(parents=True)
                 if not cv2.imwrite(str(img_outp), aligned_img):
@@ -145,4 +146,4 @@ def main(
 
 
 if __name__ == "__main__":
-    CLI(main, as_positional=False)
+    auto_cli(main, as_positional=False, parser_mode="omegaconf")
