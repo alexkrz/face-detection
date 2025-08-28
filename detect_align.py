@@ -94,7 +94,7 @@ def align_face(
 
 
 def main(
-    data_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/selection/001",
+    data_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/selection_v2",
     out_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/aligned",
     file_ext: str = ".png",
     method_name: str = "yolo",
@@ -108,7 +108,7 @@ def main(
     assert file_ext in [".png", ".jpg"]
     assert method_name in func_dict.keys()
 
-    img_paths = sorted(list(data_p.glob("*" + file_ext)))
+    img_paths = sorted(list(data_p.rglob("*" + file_ext)))
     error_list = []
     error_count = 0
     for i in tqdm(range(len(img_paths))):
