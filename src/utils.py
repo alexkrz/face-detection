@@ -4,7 +4,12 @@ import cv2
 import numpy as np
 
 
-def draw_bboxes_and_keypoints(img: np.ndarray, bboxes: list, keypoints_all: list) -> np.ndarray:
+def draw_bboxes_and_keypoints(
+    img: np.ndarray,
+    bboxes: list,
+    keypoints_all: list,
+    point_size: int = 5,
+) -> np.ndarray:
     img = deepcopy(img)
     for i in range(len(bboxes)):
         # bbox is a list of four integers (x, y, w, h)
@@ -17,13 +22,13 @@ def draw_bboxes_and_keypoints(img: np.ndarray, bboxes: list, keypoints_all: list
             img,
             (x, y),
             (x + w, y + h),
-            (0, 155, 255),
-            2,
+            (0, 255, 0),
+            5,
         )
 
-        cv2.circle(img, (keypoints["left_eye"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["right_eye"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["nose"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["mouth_left"]), 2, (0, 155, 255), 2)
-        cv2.circle(img, (keypoints["mouth_right"]), 2, (0, 155, 255), 2)
+        cv2.circle(img, (keypoints["left_eye"]), 2, (0, 0, 255), point_size)
+        cv2.circle(img, (keypoints["right_eye"]), 2, (0, 0, 255), point_size)
+        cv2.circle(img, (keypoints["nose"]), 2, (0, 0, 255), point_size)
+        cv2.circle(img, (keypoints["mouth_left"]), 2, (0, 0, 255), point_size)
+        cv2.circle(img, (keypoints["mouth_right"]), 2, (0, 0, 255), point_size)
     return img
