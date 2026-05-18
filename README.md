@@ -29,27 +29,17 @@ List of important approaches:
     - The YoloV8-Face repository is here: <https://github.com/derronqi/yolov8-face/tree/main>
     - Converted ONNX models for yolov8 can be found here: <https://github.com/hpc203/yolov8-face-landmarks-opencv-dnn>
 
-## Set up repository
+## Setup
 
-1. Install miniconda
-2. Create conda environment with
+We recommend [miniforge](https://conda-forge.org/download/) to set up your python environment. \
+Then [uv](https://docs.astral.sh/uv/) can be used to install the project dependencies:
 
-    ```bash
-    conda env create -n fdetect -f environment.yml
-    ```
-
-3. Install pip requirements
-
-    ```bash
-    conda activate fdetect
-    pip install -r requirements.txt
-    ```
-
-4. Install pre-commit
-
-    ```bash
-    pre-commit install
-    ```
+```bash
+conda create -n $YOUR_ENV_NAME python=3.12
+conda activate $YOUR_ENV_NAME
+uv pip install -r requirements.txt
+pre-commit install
+```
 
 ## Run scripts
 
