@@ -94,9 +94,9 @@ def align_face(
 
 
 def main(
-    data_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/selection_v2",
-    out_p: str = os.environ["HOME"] + "/Data/Multi-PIE/data/aligned",
-    file_ext: str = ".png",
+    data_p: str,
+    out_p: str,
+    file_ext: str = ".jpg",
     method_name: str = "yolo",
     write_images: bool = True,
 ):
