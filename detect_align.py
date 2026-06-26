@@ -11,12 +11,14 @@ from tqdm import tqdm
 from src.mtcnn_caffe import mtcnn_caffe_detect
 from src.mtcnn_onnx import mtcnn_onnx_detect
 from src.utils import draw_bboxes_and_keypoints
-from src.yolo import yolo_detect
+from src.yolov5 import yolov5_detect
+from src.yolov8 import yolov8_detect
 
 func_dict = {
     "mtcnn_caffe": mtcnn_caffe_detect,
     "mtcnn_onnx": mtcnn_onnx_detect,
-    "yolo": yolo_detect,
+    "yolov5": yolov5_detect,
+    "yolov8": yolov8_detect,
 }
 
 DEBUG = False
@@ -97,7 +99,7 @@ def main(
     data_p: str,
     out_p: str,
     file_ext: str = ".jpg",
-    method_name: str = "yolo",
+    method_name: str = "yolov5",
     write_images: bool = True,
 ):
     data_p = Path(data_p)  # type: Path
