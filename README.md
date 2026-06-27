@@ -60,3 +60,4 @@ Use `-h` flag to show options
 ## Todos
 
 - [ ] Fix performance discrepancy between `src/mtcnn_onnx.py` and `src/mtcnn_caffe.py`
+- [ ] Add RetinaFace onnx model to detect_align pipeline
