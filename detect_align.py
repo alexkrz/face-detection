@@ -110,7 +110,7 @@ def main(
     assert file_ext in [".png", ".jpg"]
     assert method_name in func_dict.keys()
 
-    img_paths = sorted(list(data_p.rglob("*" + file_ext)))
+    img_paths = sorted(data_p.rglob("*" + file_ext))
     error_list = []
     error_count = 0
     for i in tqdm(range(len(img_paths))):
