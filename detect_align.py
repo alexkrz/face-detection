@@ -99,7 +99,7 @@ def main(
     data_p: str,
     out_p: str,
     file_ext: str = ".jpg",
-    method_name: str = "yolov5",
+    method_name: str = "yolov8",
     write_images: bool = True,
 ):
     data_p = Path(data_p)  # type: Path
